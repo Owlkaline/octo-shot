@@ -170,6 +170,10 @@ impl Scene for PlayScreen {
     
     self.bullets.append(&mut new_bullets);
     self.loot.append(&mut new_loot);
+    
+    for loot in &mut self.loot {
+      loot.animation_update(delta_time);
+    }
   }
   
   fn draw(&self, draw_calls: &mut Vec<DrawCall>) {
@@ -178,7 +182,8 @@ impl Scene for PlayScreen {
     
     draw_calls.push(DrawCall::replace_ortho_camera(self.camera.clone()));
     
-   // draw_calls.push(DrawCall::set_texture_scale(0.125));
+    //draw_calls.push(DrawCall::set_texture_scale(0.125));
+    //draw_calls.push(DrawCall::set_texture_scale(0.999));
     
     self.level.draw(draw_calls);
     
@@ -215,7 +220,7 @@ impl Scene for PlayScreen {
     draw_calls.push(DrawCall::draw_instanced("fire_bullet".to_string()));
     draw_calls.push(DrawCall::draw_instanced("ice_bullet".to_string()));
     draw_calls.push(DrawCall::draw_instanced("electric_bullet".to_string()));
-    draw_calls.push(DrawCall::draw_instanced("bullet".to_string()));
+    draw_calls.push(DrawCall::draw_instanced("basic_bullet_spritesheet".to_string()));
     draw_calls.push(DrawCall::draw_instanced("buff_spritesheet".to_string())); // loot on ground
     draw_calls.push(DrawCall::draw_instanced("club_enemy".to_string()));
     draw_calls.push(DrawCall::draw_instanced("diamond_enemy".to_string()));

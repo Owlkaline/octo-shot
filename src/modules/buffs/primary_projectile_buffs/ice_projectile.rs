@@ -13,7 +13,7 @@ pub struct IceProjectileBuff {
 impl IceProjectileBuff {
   pub fn new() -> IceProjectileBuff {
     IceProjectileBuff {
-      data: BuffData::new(21, 5, LootRarity::Common),
+      data: BuffData::new(21, 5, LootRarity::VeryRare),
     }
   }
   

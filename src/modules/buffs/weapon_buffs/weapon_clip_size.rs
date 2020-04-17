@@ -12,7 +12,7 @@ pub struct ClipSizeBuff {
 impl ClipSizeBuff {
   pub fn new(value: f32) -> ClipSizeBuff {
     ClipSizeBuff {
-      data: BuffData::new(4, 5, LootRarity::Uncommon).set_modified_value(value),
+      data: BuffData::new(4, 5, LootRarity::Rare).set_modified_value(value),
     }
   }
   

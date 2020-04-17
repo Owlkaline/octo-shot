@@ -63,7 +63,7 @@ impl Scene for LoadScreen {
       
       draw_calls.push(DrawCall::load_texture("player".to_string()));
       draw_calls.push(DrawCall::load_texture("circle".to_string()));
-      draw_calls.push(DrawCall::load_texture("bullet".to_string()));
+      draw_calls.push(DrawCall::load_texture("basic_bullet_spritesheet".to_string()));
       draw_calls.push(DrawCall::load_texture("buff_spritesheet".to_string()));
       
       draw_calls.push(DrawCall::load_texture("club_enemy".to_string()));

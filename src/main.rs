@@ -46,7 +46,7 @@ fn fps_overlay(draw_calls: &mut Vec<DrawCall>, dimensions: Vector2<f32>, fps: f6
 }
 
 fn main() {
-  let (mut graphics, event_loop) = CoreMaat::new("TDChainGame".to_string(), (MAJOR) << 22 | (MINOR) << 12 | (PATCH), 1280.0, 1080.0, true);
+  let (mut graphics, event_loop) = CoreMaat::new("Octo Shot".to_string(), (MAJOR) << 22 | (MINOR) << 12 | (PATCH), 1280.0, 1080.0, true);
   //graphics.set_icon("./resources/textures/entities/Sun_glasses.png".to_string());
   graphics.preload_font(String::from("Arial"),
                         String::from("./resources/fonts/azonix.png"),
@@ -59,7 +59,6 @@ fn main() {
   
   graphics.add_texture("player".to_string(), "./resources/textures/player.png".to_string());
   graphics.add_texture("circle".to_string(), "./resources/textures/circle.png".to_string());
-  graphics.add_texture("bullet".to_string(), "./resources/textures/bullet.png".to_string());
   graphics.add_texture("buff_spritesheet".to_string(), "./resources/textures/buffs/buff_spritesheet.png".to_string());
   
   graphics.add_texture("club_enemy".to_string(), "./resources/textures/club_enemy.png".to_string());
@@ -71,6 +70,7 @@ fn main() {
   graphics.add_texture("fire_particle".to_string(), "./resources/textures/particle_effects/ice.png".to_string());
   graphics.add_texture("portal".to_string(), "./resources/textures/portal.png".to_string());
   
+  graphics.add_texture("basic_bullet_spritesheet".to_string(), "./resources/textures/bullets/basic_bullet_spritesheet.png".to_string());
   graphics.add_texture("electric_bullet".to_string(), "./resources/textures/bullets/electric_bullet.png".to_string());
   graphics.add_texture("ice_bullet".to_string(), "./resources/textures/bullets/ice_bullet.png".to_string());
   graphics.add_texture("fire_bullet".to_string(), "./resources/textures/bullets/fire_bullet.png".to_string());
@@ -79,7 +79,7 @@ fn main() {
   graphics.create_instance_texture_buffer("".to_string(), "".to_string());
   graphics.create_instance_texture_buffer("player".to_string(), "player".to_string());
   graphics.create_instance_texture_buffer("circle".to_string(), "circle".to_string());
-  graphics.create_instance_texture_buffer("bullet".to_string(), "bullet".to_string());
+  graphics.create_instance_texture_buffer("basic_bullet_spritesheet".to_string(), "basic_bullet_spritesheet".to_string());
   graphics.create_instance_texture_buffer("buff_spritesheet".to_string(), "buff_spritesheet".to_string());
   graphics.create_instance_texture_buffer("club_enemy".to_string(),"club_enemy".to_string());
   graphics.create_instance_texture_buffer("diamond_enemy".to_string(), "diamond_enemy".to_string());

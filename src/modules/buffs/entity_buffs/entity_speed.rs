@@ -12,7 +12,7 @@ pub struct EntitySpeedBuff {
 impl EntitySpeedBuff {
   pub fn new(value: f32) -> EntitySpeedBuff {
     EntitySpeedBuff {
-      data: BuffData::new(9, 5, LootRarity::Common).set_modified_value(value),
+      data: BuffData::new(9, 5, LootRarity::Rare).set_modified_value(value),
     }
   }
   

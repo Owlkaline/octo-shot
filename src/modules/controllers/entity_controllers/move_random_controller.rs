@@ -53,7 +53,7 @@ impl GenericEntityController for RandomMoveEntityController {
     
     let direction = math::normalise_vector2(self.target_location - entity.position());
     
-    let acceleration = direction * entity.max_speed() - entity.velocity();
+    let acceleration = direction * entity.speed() - entity.velocity();
     
     entity.set_rotation(math::to_degrees(entity.velocity().y.atan2(entity.velocity().x))-90.0);
     

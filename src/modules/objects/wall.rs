@@ -22,4 +22,8 @@ impl GenericObject for Wall {
   fn o_mut_data(&mut self) -> &mut ObjectData {
     &mut self.data
   }
+  
+  fn animation_update(&mut self, delta_time: f32) {
+    
+  }
 }

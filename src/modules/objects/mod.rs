@@ -82,6 +82,8 @@ pub trait GenericObject {
   fn o_data(&self) -> &ObjectData;
   fn o_mut_data(&mut self) -> &mut ObjectData;
   
+  fn animation_update(&mut self, delta_time: f32);
+  
   fn position(&self) -> Vector2<f32> {
     self.o_data().pos
   }
@@ -102,6 +104,14 @@ pub trait GenericObject {
     self.o_data().texture.to_string()
   }
   
+  fn sprite_idx(&self) -> u32 {
+    self.o_data().sprite_idx
+  }
+  
+  fn sprite_rows(&self) -> u32 {
+    self.o_data().sprite_rows
+  }
+  
   fn collision_data(&self) -> Vec<CollisionType> {
     self.o_data().collision_data.clone()
   }
@@ -120,6 +130,10 @@ pub trait GenericObject {
   
   fn set_rotation(&mut self, rotation: f32) {
     self.o_mut_data().rotation = rotation;
+  }
+  
+  fn set_sprite_idx(&mut self, idx: u32) {
+    self.o_mut_data().sprite_idx = idx;
   }
   
   fn clear_collision_data(&mut self) {

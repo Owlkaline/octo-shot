@@ -148,6 +148,10 @@ impl Weapon {
     self.clip_size
   }
   
+  pub fn clips_left(&self) -> u32 {
+    (self.total_ammo() as f32 / self.clip_size() as f32).floor() as u32
+  }
+  
   pub fn total_ammo(&self) -> u32 {
     self.total_ammo
   }

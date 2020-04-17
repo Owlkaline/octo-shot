@@ -17,7 +17,10 @@ impl Player {
   pub fn new(pos: Vector2<f32>, size: Vector2<f32>, texture: String) -> Player {
     Player {
       o_data: ObjectData::new(pos, size, texture),
-      e_data: EntityData::new().is_player().set_base_hit_points(160).finish(),
+      e_data: EntityData::new().is_player()
+                               .set_base_hit_points(160)
+                               .set_base_speed(300.0)
+                               .finish(),
       l_data: LootTableData::new(),
     }
   }
@@ -30,6 +33,10 @@ impl GenericObject for Player {
   
   fn o_mut_data(&mut self) -> &mut ObjectData {
     &mut self.o_data
+  }
+  
+  fn animation_update(&mut self, delta_time: f32) {
+    
   }
 }
 

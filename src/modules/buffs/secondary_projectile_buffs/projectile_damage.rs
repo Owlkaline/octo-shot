@@ -12,7 +12,7 @@ pub struct ProjectileDamageBuff {
 impl ProjectileDamageBuff {
   pub fn new(value: f32) -> ProjectileDamageBuff {
     ProjectileDamageBuff {
-      data: BuffData::new(3, 5, LootRarity::Uncommon).set_modified_value(value),
+      data: BuffData::new(3, 5, LootRarity::Legendary).set_modified_value(value),
     }
   }
   

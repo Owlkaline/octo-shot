@@ -37,7 +37,6 @@ impl EnviromentSquare for IceEnviroment {
   
   fn spawn_enemy(&self, pos: Vector2<f32>) -> (Option<Box<dyn GenericEntityController>>, Box<dyn GenericEntity>) {
     let mut enemy: Box<dyn GenericEntity> = Box::new(HeartEnemy::new(pos));
-    enemy.set_base_speed(150.0);
     enemy.clear_collision_data();
     enemy.add_circle_collider(Vector2::zero(), enemy.size().x.min(enemy.size().y)*0.5);
     

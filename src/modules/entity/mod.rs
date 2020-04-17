@@ -409,12 +409,12 @@ impl EntityData {
     self
   }
   
-  fn draw_stats(&self, nth: u32, name: &str, stat: f32, dim: Vector2<f32>, draw_calls: &mut Vec<DrawCall>) {
+  fn draw_stats(&self, nth: i32, name: String, dim: Vector2<f32>, draw_calls: &mut Vec<DrawCall>) {
     let y = dim.y-128.0 - (16.0*nth as f32);
     draw_calls.push(DrawCall::draw_text_basic(Vector2::new(25.0, y),
                                               Vector2::new(64.0, 64.0),
                                               Vector4::new(1.0, 1.0, 1.0, 1.0),
-                                              format!("{}: {}%", name, stat),
+                                              format!("{}", name),
                                               "Arial".to_string()));
   }
 }
@@ -587,6 +587,7 @@ pub trait GenericEntity: GenericObject + LootTable {
     
     let current_ammo = self.weapon().current_ammo() as f32;
     let clip_size = self.weapon().clip_size() as f32;
+    let clips_left = self.weapon().clips_left() as u32;
     let max_ammo = self.weapon().max_ammo() as f32;
     let total_ammo = self.weapon().total_ammo() as f32;
     
@@ -613,8 +614,7 @@ pub trait GenericEntity: GenericObject + LootTable {
     
     // right bar
     let segment_size = entity_size.y * (1.0 / (max_ammo / clip_size));
-    let segments_left = (total_ammo / clip_size).floor() as usize;
-    for i in 0..segments_left {
+    for i in 0..clips_left as usize {
       let segment_pos = normalised_per_dir*-1.0*(entity_size.y*0.5 - segment_size*0.5 - segment_size*i as f32);
       draw_calls.push(DrawCall::draw_coloured(entity_pos+segment_pos+dir,
                                               Vector2::new(bar_thiccness, segment_size-1.0),
@@ -695,16 +695,40 @@ pub trait GenericEntity: GenericObject + LootTable {
     }
     
     // draw buff stats
+    self.e_data().draw_stats(-6, format!("Current Stats"), window_size, draw_calls);
+    self.e_data().draw_stats(-5, format!("--------------"), window_size, draw_calls);
+    self.e_data().draw_stats(-4, format!("hitpoints: {}", self.e_data().current_stats.hit_points), window_size, draw_calls);
+    self.e_data().draw_stats(-3, format!("shieldpoints: {}", self.e_data().current_stats.shield_points), window_size, draw_calls);
+    self.e_data().draw_stats(-2, format!("armour: {}", self.e_data().current_stats.armour), window_size, draw_calls);
+    self.e_data().draw_stats(-1, format!("speed: {}", self.e_data().current_stats.speed), window_size, draw_calls);
+    self.e_data().draw_stats(0, format!("size: {}x{}", self.o_data().size().x, self.o_data().size().y), window_size, draw_calls);
+    self.e_data().draw_stats(1, format!("Ice Res: {}%", self.e_data().current_stats.fire_resistance), window_size, draw_calls);
+    self.e_data().draw_stats(2, format!("Fire Res: {}%", self.e_data().current_stats.ice_resistance), window_size, draw_calls);
+    self.e_data().draw_stats(3, format!("Electric Res: {}%", self.e_data().current_stats.electric_resistance), window_size, draw_calls);
     let stat = &self.e_data().stat_buff_changes;
-    self.e_data().draw_stats(0, "hitpoint", stat.percentage_hitpoints, window_size, draw_calls);
-    self.e_data().draw_stats(1, "shieldpoint", stat.percentage_shield_points, window_size, draw_calls);
-    self.e_data().draw_stats(2, "armour", stat.percentage_armour, window_size, draw_calls);
-    self.e_data().draw_stats(3, "speed", stat.percentage_speed, window_size, draw_calls);
-    self.e_data().draw_stats(4, "size", stat.percentage_size, window_size, draw_calls);
-    self.e_data().draw_stats(5, "life time", stat.percentage_life_time, window_size, draw_calls);
-    self.e_data().draw_stats(6, "fire res", stat.percentage_fire_resistance, window_size, draw_calls);
-    self.e_data().draw_stats(7, "ice res", stat.percentage_ice_resistance, window_size, draw_calls);
-    self.e_data().draw_stats(8, "electric_res", stat.percentage_electric_resistance, window_size, draw_calls);
+    self.e_data().draw_stats(5, format!("MODIFIERS"), window_size, draw_calls);
+    self.e_data().draw_stats(6, format!("--------------"), window_size, draw_calls);
+    self.e_data().draw_stats(7, format!("hitpoint: {}%", stat.percentage_hitpoints), window_size, draw_calls);
+    self.e_data().draw_stats(8, format!("shieldpoint: {}%", stat.percentage_shield_points), window_size, draw_calls);
+    self.e_data().draw_stats(9, format!("armour: {}%", stat.percentage_armour), window_size, draw_calls);
+    self.e_data().draw_stats(10, format!("speed: {}%", stat.percentage_speed), window_size, draw_calls);
+    self.e_data().draw_stats(11, format!("size: {}%", stat.percentage_size), window_size, draw_calls);
+    self.e_data().draw_stats(12, format!("life time: {}%", stat.percentage_life_time), window_size, draw_calls);
+    self.e_data().draw_stats(13, format!( "fire res: {}%", stat.percentage_fire_resistance), window_size, draw_calls);
+    self.e_data().draw_stats(14, format!( "ice res: {}%", stat.percentage_ice_resistance), window_size, draw_calls);
+    self.e_data().draw_stats(15, format!( "electric res: {}%", stat.percentage_electric_resistance), window_size, draw_calls);
+    
+    self.e_data().draw_stats(17, format!("Weapon Stats"), window_size, draw_calls);
+    self.e_data().draw_stats(18, format!("--------------"), window_size, draw_calls);
+    self.e_data().draw_stats(19, format!("ammo in clip: {}", current_ammo), window_size, draw_calls);
+    self.e_data().draw_stats(20, format!("clips left: {}", clips_left), window_size, draw_calls);
+    self.e_data().draw_stats(21, format!("total ammo: {}", total_ammo), window_size, draw_calls);
+    self.e_data().draw_stats(22, format!("clip size: {}", clip_size), window_size, draw_calls);
+    self.e_data().draw_stats(23, format!("max ammo: {}", max_ammo), window_size, draw_calls);
+    
+    self.e_data().draw_stats(25, format!("jammed: {}", is_jammed), window_size, draw_calls);
+    self.e_data().draw_stats(26, format!("unjamming: {}", is_unjamming), window_size, draw_calls);
+    self.e_data().draw_stats(27, format!("reloading: {}", is_reloading), window_size, draw_calls);
   }
 }
 

@@ -14,8 +14,10 @@ pub fn handle_camera(target: &Box<dyn GenericEntity>, window_size: Vector2<f32>,
   let max_y_diff = target.position().y-level_bounds.y;
   let min_y_diff = target.position().y+level_bounds.y;
   
+  
+  //right side
   if (max_x_diff).abs() < window_size.x*0.5 {
-      pos.x = level_bounds.x-window_size.x;
+    pos.x = level_bounds.x-window_size.x;
   }
   
   if (max_y_diff).abs() < window_size.y*0.5 {
@@ -29,6 +31,8 @@ pub fn handle_camera(target: &Box<dyn GenericEntity>, window_size: Vector2<f32>,
     pos.y = -level_bounds.y;
   }
   
+  
+  // centers camera so it doesnt move when world is smaller than width or height of view
   if window_size.x > level_dim.x {
     pos.x = -window_size.x*0.5;
   }

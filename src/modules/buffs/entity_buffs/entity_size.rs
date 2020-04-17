@@ -12,7 +12,7 @@ pub struct EntitySizeBuff {
 impl EntitySizeBuff {
   pub fn new(value: f32) -> EntitySizeBuff {
     EntitySizeBuff {
-      data: BuffData::new(14, 5, LootRarity::Common).set_modified_value(value),
+      data: BuffData::new(14, 5, LootRarity::Legendary).set_modified_value(value),
     }
   }
   

@@ -37,12 +37,12 @@ impl Buff for BasicProjectileBuff {
     &mut self.data
   }
   
-  fn set_bullet_controller(&self) -> Option<Box<dyn GenericBulletController>> {
-    None
-  }
-  
   fn apply_stat_modifiers(&self, _data: &mut StatModifier) {
     
+  }
+  
+  fn set_bullet_controller(&self) -> Option<Box<dyn GenericBulletController>> {
+    None
   }
   
   fn apply_to_entity(&self, entity: &mut Box<dyn GenericEntity>, _delta_time: f32) {

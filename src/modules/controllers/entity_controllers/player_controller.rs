@@ -1,6 +1,6 @@
 
 use maat_graphics::math;
-use maat_graphics::cgmath::{Vector2, Zero};
+use maat_graphics::cgmath::{Vector2, Zero, InnerSpace};
 use maat_input_handler::MappedKeys;
 
 use crate::modules::controllers::GenericEntityController;
@@ -10,26 +10,17 @@ use rand::prelude::ThreadRng;
 
 use maat_graphics::camera::OrthoCamera;
 
-const DASH_LENGTH: f32 = 0.1;
 const DASH_COOLDOWN: f32 = 3.0;
 
 pub struct PlayerEntityController {
   // stuff
-  speed: f32,
-  dash_timer: f32,
   dash_cooldown: f32,
-  
-  stored_velocity: Vector2<f32>,
 }
 
 impl PlayerEntityController {
   pub fn new() -> PlayerEntityController {
     PlayerEntityController {
-      speed: 300.0,
-      dash_timer: 0.0,
       dash_cooldown: 0.0,
-      
-      stored_velocity: Vector2::zero(),
     }
   }
 }
@@ -53,16 +44,16 @@ impl GenericEntityController for PlayerEntityController {
     }
     
     if keys.w_pressed() {
-      acceleration += Vector2::new(0.0, self.speed);
+      acceleration += Vector2::new(0.0, entity.speed());
     }
     if keys.s_pressed() {
-      acceleration += Vector2::new(0.0, -self.speed);
+      acceleration += Vector2::new(0.0, -entity.speed());
     }
     if keys.d_pressed() {
-      acceleration += Vector2::new(self.speed, 0.0);
+      acceleration += Vector2::new(entity.speed(), 0.0);
     }
     if keys.a_pressed() {
-      acceleration += Vector2::new(-self.speed, 0.0);
+      acceleration += Vector2::new(-entity.speed(), 0.0);
     }
     
     let look_vector = math::normalise_vector2(entity.position()-camera.get_position() - mouse);
@@ -72,21 +63,13 @@ impl GenericEntityController for PlayerEntityController {
     // add dash mechanic
     if self.dash_cooldown <= 0.0 {
       if keys.space_pressed() {
-        if self.dash_timer <= DASH_LENGTH {
-          if self.dash_timer <= 0.0 {
-            self.stored_velocity = entity.velocity();
-            entity.set_velocity(Vector2::zero());
-          }
-          
-          acceleration = Vector2::zero();
-          entity.set_velocity(entity.velocity() + (-look_vector*50000.0)*delta_time);
-          self.dash_timer += delta_time;
-        } else {
-          self.dash_cooldown = DASH_COOLDOWN;
-          self.dash_timer = 0.0;
-          entity.set_velocity(self.stored_velocity);
-          self.stored_velocity = Vector2::zero();
-        }
+        let crnt_vel = entity.velocity();
+        
+        let vel_mag = crnt_vel.magnitude();
+        
+        entity.set_velocity(look_vector*-vel_mag);
+        acceleration = look_vector*-vel_mag; // should be based on player speed
+        self.dash_cooldown = DASH_COOLDOWN;
       }
     }
     

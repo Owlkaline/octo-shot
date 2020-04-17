@@ -45,6 +45,10 @@ impl GenericObject for FireBullet {
   fn o_mut_data(&mut self) -> &mut ObjectData {
     &mut self.o_data
   }
+  
+  fn animation_update(&mut self, delta_time: f32) {
+    
+  }
 }
 
 impl LootTable for FireBullet {

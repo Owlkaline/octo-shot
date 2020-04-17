@@ -13,13 +13,14 @@ pub struct BasicBullet {
   o_data: ObjectData,
   e_data: EntityData,
   l_data: LootTableData,
+  animation_tick: f32,
 }
 
 impl BasicBullet {
   pub fn new(pos: Vector2<f32>, life_time: f32, friendly: bool) -> BasicBullet {
     
     BasicBullet {
-      o_data: ObjectData::new(pos, Vector2::new(24.0, 24.0), "bullet".to_string()),
+      o_data: ObjectData::new_spritesheet(pos, Vector2::new(36.0, 36.0), "basic_bullet_spritesheet".to_string(), 0, 3),
       e_data: EntityData::new_for_bullet().set_bullet_alignment(friendly)
                                           .set_base_speed(DEFAULT_BASIC_BULLET_SPEED)
                                           .set_base_hit_points(20)
@@ -27,6 +28,7 @@ impl BasicBullet {
                                           .set_base_damage(1)
                                           .finish(), // damage per hitpoint
       l_data: LootTableData::new(),
+      animation_tick: 0.0,
     }
   }
   
@@ -44,6 +46,16 @@ impl GenericObject for BasicBullet {
   
   fn o_mut_data(&mut self) -> &mut ObjectData {
     &mut self.o_data
+  }
+  
+  fn animation_update(&mut self, delta_time: f32) {
+    self.animation_tick += delta_time;
+    if self.animation_tick > 0.1 {
+      self.animation_tick -= 0.1;
+      self.set_sprite_idx((self.sprite_idx() + 1)%(self.sprite_rows()*self.sprite_rows()));
+      //self.sprite_idx();
+      //self.o_mut_data().sprite_idx = (self.o_data().sprite_idx + 1)%(self.o_data().sprite_rows*self.o_data().sprite_rows);
+    }
   }
 }
 
@@ -70,8 +82,8 @@ impl GenericEntity for BasicBullet {
     &mut self.e_data
   }
   
-  fn update(&mut self, _delta_time: f32) {
-    
+  fn update(&mut self, delta_time: f32) {
+    self.animation_update(delta_time);
   }
   
   fn bullet_spawn_locations(&self) -> Vector2<f32> {

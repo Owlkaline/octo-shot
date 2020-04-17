@@ -171,7 +171,7 @@ pub trait LootTable {
       PossibleLoot::ProjectileLifetime,
       PossibleLoot::BasicProjectile,
       PossibleLoot::EntityHitPoints,
-      PossibleLoot::EntitySpeed,
+      PossibleLoot::EntitySpeed
     );
     
     loot.append(&mut self.drop_all_loot(pos, possible_loot, rng));

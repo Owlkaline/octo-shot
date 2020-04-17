@@ -12,7 +12,7 @@ pub struct ControllerCurveBuff {
 impl ControllerCurveBuff {
   pub fn new() -> ControllerCurveBuff {
     ControllerCurveBuff {
-      data: BuffData::new(23, 5, LootRarity::Common),
+      data: BuffData::new(23, 5, LootRarity::Rare),
     }
   }
 }

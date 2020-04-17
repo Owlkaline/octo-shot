@@ -16,7 +16,7 @@ pub struct DualProjectileBuff {
 impl DualProjectileBuff {
   pub fn new() -> DualProjectileBuff {
     DualProjectileBuff {
-      data: BuffData::new(17, 5, LootRarity::Common),
+      data: BuffData::new(17, 5, LootRarity::Rare),
     }
   }
 }

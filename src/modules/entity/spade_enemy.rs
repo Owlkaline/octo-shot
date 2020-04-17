@@ -16,7 +16,10 @@ impl SpadeEnemy {
   pub fn new(pos: Vector2<f32>) -> SpadeEnemy {
     SpadeEnemy {
       o_data: ObjectData::new(pos, Vector2::new(48.0, 48.0), "spade_enemy".to_string()),
-      e_data: EntityData::new().is_enemy_character().set_base_hit_points(40).finish(),
+      e_data: EntityData::new().is_enemy_character()
+                               .set_base_hit_points(40)
+                               .set_base_speed(150.0)
+                               .finish(),
       l_data: LootTableData::new(),
     }
   }
@@ -29,6 +32,10 @@ impl GenericObject for SpadeEnemy {
   
   fn o_mut_data(&mut self) -> &mut ObjectData {
     &mut self.o_data
+  }
+  
+  fn animation_update(&mut self, delta_time: f32) {
+    
   }
 }
 

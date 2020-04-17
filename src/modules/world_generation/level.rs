@@ -71,8 +71,8 @@ impl Level {
     let width = self.square_size.x * self.grid_size.x as f32;
     let height = self.square_size.y * self.grid_size.y as f32;
     
-    let x = rng.gen::<f32>() * width - width*0.5;
-    let y = rng.gen::<f32>() * height - height*0.5;
+    let x = rng.gen::<f32>() * width*0.95 - width*0.45;
+    let y = rng.gen::<f32>() * height*0.95 - height*0.45;
     
     PortalPad::new(Vector2::new(x,y), Vector2::new(128.0, 128.0))
   } 
@@ -117,7 +117,7 @@ impl Level {
       y_offset = 1.0;
     }
     
-    let right_wall: Box<dyn GenericObject> = Box::new(Wall::new(Vector2::new(wall_length*0.5 + x_offset*self.square_size.x*0.5 - wall_thiccness*0.5,
+    let right_wall: Box<dyn GenericObject> = Box::new(Wall::new(Vector2::new(wall_length*0.5 + x_offset*self.square_size.x*0.5-wall_thiccness*1.25,
                                                                          y_offset*self.square_size.y*0.5), 
                                                             Vector2::new(wall_thiccness, wall_height), 
                                                             Vector4::new(0.12, 0.236862745, 0.009411765, 1.0)));
@@ -128,7 +128,7 @@ impl Level {
                                                           Vector4::new(0.12, 0.236862745, 0.009411765, 1.0)));
     
     let bottom_wall: Box<dyn GenericObject> = Box::new(Wall::new(Vector2::new(x_offset*self.square_size.x*0.5,
-                                                                          -wall_height*0.5 + y_offset*self.square_size.y*0.5 + wall_thiccness*0.5), 
+                                                                          -wall_height*0.5 + y_offset*self.square_size.y*0.5 + wall_thiccness*0.95), 
                                                              Vector2::new(wall_length,wall_thiccness), 
                                                              Vector4::new(0.12, 0.236862745, 0.009411765, 1.0)));
                               
